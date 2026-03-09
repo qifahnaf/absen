@@ -37,7 +37,7 @@ font-weight:bold;
 font-size:14px;
 }
 
-input{
+input,select{
 width:100%;
 padding:10px;
 margin-top:5px;
@@ -45,6 +45,11 @@ margin-bottom:15px;
 border-radius:8px;
 border:1px solid #ccc;
 font-size:16px;
+}
+
+.jam{
+display:flex;
+gap:5px;
 }
 
 button{
@@ -87,7 +92,6 @@ color:#721c24;
 <body>
 
 <div class="container">
-
 <div class="card">
 
 <h2>Absensi Keterlambatan</h2>
@@ -96,10 +100,16 @@ color:#721c24;
 <input type="text" id="nama" placeholder="Masukkan nama pegawai">
 
 <label>Ketentuan Jam Masuk</label>
-<input type="time" id="jamKetentuan">
+<div class="jam">
+<select id="jamKetentuanJam"></select>
+<select id="jamKetentuanMenit"></select>
+</div>
 
 <label>Jam Masuk Pegawai</label>
-<input type="time" id="jamPegawai">
+<div class="jam">
+<select id="jamPegawaiJam"></select>
+<select id="jamPegawaiMenit"></select>
+</div>
 
 <button onclick="hitung()">Hitung Keterlambatan</button>
 
@@ -110,32 +120,63 @@ color:#721c24;
 
 <script>
 
+function isiJam(){
+
+for(let i=0;i<24;i++){
+
+let jam=i.toString().padStart(2,'0');
+
+document.getElementById("jamKetentuanJam").innerHTML+=`<option value="${jam}">${jam}</option>`;
+document.getElementById("jamPegawaiJam").innerHTML+=`<option value="${jam}">${jam}</option>`;
+
+}
+
+for(let i=0;i<60;i++){
+
+let menit=i.toString().padStart(2,'0');
+
+document.getElementById("jamKetentuanMenit").innerHTML+=`<option value="${menit}">${menit}</option>`;
+document.getElementById("jamPegawaiMenit").innerHTML+=`<option value="${menit}">${menit}</option>`;
+
+}
+
+}
+
+isiJam();
+
+
 function hitung(){
 
-let ketentuan=document.getElementById("jamKetentuan").value;
-let pegawai=document.getElementById("jamPegawai").value;
+let nama=document.getElementById("nama").value;
 
-if(ketentuan=="" || pegawai==""){
-alert("Mohon isi semua data");
+let kJam=document.getElementById("jamKetentuanJam").value;
+let kMenit=document.getElementById("jamKetentuanMenit").value;
+
+let pJam=document.getElementById("jamPegawaiJam").value;
+let pMenit=document.getElementById("jamPegawaiMenit").value;
+
+if(nama==""){
+alert("Mohon isi nama pegawai");
 return;
 }
 
-let k=ketentuan.split(":");
-let p=pegawai.split(":");
-
-let menitKetentuan=parseInt(k[0])*60+parseInt(k[1]);
-let menitPegawai=parseInt(p[0])*60+parseInt(p[1]);
+let menitKetentuan=parseInt(kJam)*60+parseInt(kMenit);
+let menitPegawai=parseInt(pJam)*60+parseInt(pMenit);
 
 let terlambat=menitPegawai-menitKetentuan;
 
 let hasil=document.getElementById("hasil");
 
 if(terlambat<=0){
+
 hasil.className="tepat";
-hasil.innerHTML="✅ Tepat waktu / tidak terlambat";
+hasil.innerHTML="✅ "+nama+" tepat waktu / tidak terlambat";
+
 }else{
+
 hasil.className="telat";
-hasil.innerHTML="⏰ Terlambat "+terlambat+" menit";
+hasil.innerHTML="⏰ "+nama+" terlambat "+terlambat+" menit";
+
 }
 
 }
