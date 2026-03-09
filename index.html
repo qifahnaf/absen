@@ -1,1 +1,146 @@
-index
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aplikasi Hitung Keterlambatan</title>
+
+<style>
+
+body{
+font-family: Arial, sans-serif;
+background:#f2f4f7;
+margin:0;
+padding:0;
+}
+
+.container{
+max-width:420px;
+margin:auto;
+padding:20px;
+}
+
+.card{
+background:white;
+padding:20px;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.1);
+}
+
+h2{
+text-align:center;
+color:#2c3e50;
+}
+
+label{
+font-weight:bold;
+font-size:14px;
+}
+
+input{
+width:100%;
+padding:10px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:8px;
+border:1px solid #ccc;
+font-size:16px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#2e86de;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1b4f72;
+}
+
+#hasil{
+margin-top:15px;
+padding:10px;
+border-radius:8px;
+text-align:center;
+font-weight:bold;
+font-size:16px;
+}
+
+.tepat{
+background:#d4edda;
+color:#155724;
+}
+
+.telat{
+background:#f8d7da;
+color:#721c24;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Absensi Keterlambatan</h2>
+
+<label>Nama Pegawai</label>
+<input type="text" id="nama" placeholder="Masukkan nama pegawai">
+
+<label>Ketentuan Jam Masuk</label>
+<input type="time" id="jamKetentuan">
+
+<label>Jam Masuk Pegawai</label>
+<input type="time" id="jamPegawai">
+
+<button onclick="hitung()">Hitung Keterlambatan</button>
+
+<div id="hasil"></div>
+
+</div>
+</div>
+
+<script>
+
+function hitung(){
+
+let ketentuan=document.getElementById("jamKetentuan").value;
+let pegawai=document.getElementById("jamPegawai").value;
+
+if(ketentuan=="" || pegawai==""){
+alert("Mohon isi semua data");
+return;
+}
+
+let k=ketentuan.split(":");
+let p=pegawai.split(":");
+
+let menitKetentuan=parseInt(k[0])*60+parseInt(k[1]);
+let menitPegawai=parseInt(p[0])*60+parseInt(p[1]);
+
+let terlambat=menitPegawai-menitKetentuan;
+
+let hasil=document.getElementById("hasil");
+
+if(terlambat<=0){
+hasil.className="tepat";
+hasil.innerHTML="✅ Tepat waktu / tidak terlambat";
+}else{
+hasil.className="telat";
+hasil.innerHTML="⏰ Terlambat "+terlambat+" menit";
+}
+
+}
+
+</script>
+
+</body>
+</html>
