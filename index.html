@@ -96,18 +96,23 @@ color:#721c24;
 
 <h2>Hitung Keterlambatan</h2>
 
+
+
 <label>Jam Ketentuan</label>
 <div class="jam">
-<input type="number" id="ketentuanJam" placeholder="Jam">
-<input type="number" id="ketentuanMenit" placeholder="Menit">
+<input type="number" id="ketentuanJam" placeholder="Jam" min="0" max="23" maxlength="2" oninput="this.value=this.value.slice(0,2)">
+<input type="number" id="ketentuanMenit" placeholder="Menit" min="0" max="59" maxlength="2" oninput="this.value=this.value.slice(0,2)">
 </div>
 
 <label>Jam Masuk</label>
 <div class="jam">
-<input type="number" id="pegawaiJam" placeholder="Jam">
-<input type="number" id="pegawaiMenit" placeholder="Menit">
+<input type="number" id="pegawaiJam" placeholder="Jam" min="0" max="23" maxlength="2" oninput="this.value=this.value.slice(0,2)">
+<input type="number" id="pegawaiMenit" placeholder="Menit" min="0" max="59" maxlength="2" oninput="this.value=this.value.slice(0,2)">
 </div>
 
+
+
+  
 <button onclick="hitung()">Hitung</button>
 
 <div id="hasil"></div>
