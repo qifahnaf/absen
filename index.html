@@ -37,29 +37,27 @@ font-weight:bold;
 font-size:14px;
 }
 
-input{
-width:100%;
-padding:10px;
-margin-top:5px;
-margin-bottom:15px;
-border-radius:8px;
-border:1px solid #ccc;
-font-size:16px;
-}
-
 .jam{
 display:flex;
-gap:10px;
+align-items:center;
+gap:8px;
+margin-bottom:15px;
 }
 
 .jam input{
+width:60px;
+padding:10px;
+font-size:18px;
 text-align:center;
+border-radius:8px;
+border:1px solid #ccc;
 }
 
+.titik{
+font-size:20px;
+font-weight:bold;
+}
 
-
-
-  
 button{
 width:100%;
 padding:12px;
@@ -104,23 +102,20 @@ color:#721c24;
 
 <h2>Hitung Keterlambatan</h2>
 
-
-
 <label>Jam Ketentuan</label>
 <div class="jam">
-<input type="number" id="ketentuanJam" placeholder="Jam" min="0" max="23" maxlength="2" oninput="this.value=this.value.slice(0,2)">
-<input type="number" id="ketentuanMenit" placeholder="Menit" min="0" max="59" maxlength="2" oninput="this.value=this.value.slice(0,2)">
+<input type="text" id="kJam" maxlength="2" oninput="formatJam(this,'kMenit')">
+<span class="titik">:</span>
+<input type="text" id="kMenit" maxlength="2" oninput="formatMenit(this)">
 </div>
 
 <label>Jam Masuk</label>
 <div class="jam">
-<input type="number" id="pegawaiJam" placeholder="Jam" min="0" max="23" maxlength="2" oninput="this.value=this.value.slice(0,2)">
-<input type="number" id="pegawaiMenit" placeholder="Menit" min="0" max="59" maxlength="2" oninput="this.value=this.value.slice(0,2)">
+<input type="text" id="pJam" maxlength="2" oninput="formatJam(this,'pMenit')">
+<span class="titik">:</span>
+<input type="text" id="pMenit" maxlength="2" oninput="formatMenit(this)">
 </div>
 
-
-
-  
 <button onclick="hitung()">Hitung</button>
 
 <div id="hasil"></div>
@@ -130,16 +125,49 @@ color:#721c24;
 
 <script>
 
+function hanyaAngka(input){
+input.value=input.value.replace(/[^0-9]/g,'');
+}
+
+function formatJam(input,next){
+
+hanyaAngka(input);
+
+if(input.value.length==1){
+if(parseInt(input.value)>2){
+input.value="0"+input.value;
+document.getElementById(next).focus();
+}
+}
+
+if(input.value.length==2){
+document.getElementById(next).focus();
+}
+
+}
+
+function formatMenit(input){
+
+hanyaAngka(input);
+
+if(input.value.length==1){
+if(parseInt(input.value)>5){
+input.value="0"+input.value;
+}
+}
+
+}
+
 function hitung(){
 
-let kJam=document.getElementById("ketentuanJam").value;
-let kMenit=document.getElementById("ketentuanMenit").value;
+let kJam=document.getElementById("kJam").value;
+let kMenit=document.getElementById("kMenit").value;
 
-let pJam=document.getElementById("pegawaiJam").value;
-let pMenit=document.getElementById("pegawaiMenit").value;
+let pJam=document.getElementById("pJam").value;
+let pMenit=document.getElementById("pMenit").value;
 
-if(kJam=="" || kMenit=="" || pJam=="" || pMenit==""){
-alert("Mohon isi semua kolom waktu");
+if(kJam==""||kMenit==""||pJam==""||pMenit==""){
+alert("Isi semua waktu");
 return;
 }
 
