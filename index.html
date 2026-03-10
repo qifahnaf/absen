@@ -120,6 +120,44 @@ color:#721c24;
 
 <div id="hasil"></div>
 
+<hr style="margin:25px 0">
+
+<h2>Hitung Pulang Lebih Awal</h2>
+
+<label>Jam Ketentuan Pulang</label>
+<div class="jam">
+<input type="text" id="pulangKetJam" maxlength="2" oninput="formatJam(this,'pulangKetMenit')">
+<span class="titik">:</span>
+<input type="text" id="pulangKetMenit" maxlength="2" oninput="formatMenit(this)">
+</div>
+
+<label>Jam Pulang Pegawai</label>
+<div class="jam">
+<input type="text" id="pegawaiPulangJam" maxlength="2" oninput="formatJam(this,'pegawaiPulangMenit')">
+<span class="titik">:</span>
+<input type="text" id="pegawaiPulangMenit" maxlength="2" oninput="formatMenit(this)">
+</div>
+
+<button onclick="hitungPulang()">Hitung Pulang Awal</button>
+
+<div id="hasilPulang"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
 </div>
 </div>
 
@@ -192,6 +230,67 @@ hasil.innerHTML="⏰ Terlambat "+terlambat+" menit";
 
 }
 
+
+
+
+function hitungPulang(){
+
+let kJam=document.getElementById("pulangKetJam").value;
+let kMenit=document.getElementById("pulangKetMenit").value;
+
+let pJam=document.getElementById("pegawaiPulangJam").value;
+let pMenit=document.getElementById("pegawaiPulangMenit").value;
+
+if(kJam==""||kMenit==""||pJam==""||pMenit==""){
+alert("Isi semua waktu");
+return;
+}
+
+let menitKetentuan=parseInt(kJam)*60+parseInt(kMenit);
+let menitPegawai=parseInt(pJam)*60+parseInt(pMenit);
+
+let lebihAwal=menitKetentuan-menitPegawai;
+
+let hasil=document.getElementById("hasilPulang");
+
+if(lebihAwal<=0){
+
+hasil.className="tepat";
+hasil.innerHTML="✅ Tidak pulang lebih awal";
+
+}else{
+
+hasil.className="telat";
+hasil.innerHTML="⚠️ Pulang lebih awal "+lebihAwal+" menit";
+
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
 </script>
 
 </body>
